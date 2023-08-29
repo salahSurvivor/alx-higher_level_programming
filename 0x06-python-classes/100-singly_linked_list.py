@@ -1,101 +1,110 @@
 #!/usr/bin/python3
-"""Node  class definintion """
+"""Defines the classes Node and SinglyLinkedList"""
 
 
 class Node:
-    """ Node  class defined
-        Attributes:
-            size (int): data of node
+    """
+    Class that defines properties Node.
+
+    Attributes:
+        data: data field of node.
     """
     def __init__(self, data, next_node=None):
-        """initializes
+        """Creates new instances of node.
+
         Args:
-            data (int): data
-            next_node: next_node
-        Returns:
-            None
+            __data : data field of node.
         """
         self.data = data
-        self.next_node = None
+        self.next_node = next_node
 
     @property
     def data(self):
-        """
-        getter of data
-        Return:
-            data
+        """Retrieves the data field instance.
+
+        Returns: the data field of a node.
         """
         return self.__data
 
     @data.setter
     def data(self, value):
-        """
-        Setter of data
-        Args:
-            value (int): data
-        Raises
-            TypeError: if data is not int
-        Returns:
-            None
-        """
-        if type(value) is not int:
-            raise TypeError("data must be an integer")
-        else:
-            self.__data = value
+        """Propery setter for data.
 
-    
+        Args:
+            value (int): data field of a node.
+
+        Raises:
+            TypeError: data must be an integer
+        """
+        if not isinstance(value, int):
+            raise TypeError("data must be an integer")
+        self.__data = value
+
     @property
     def next_node(self):
-        """
-        getter of node
-        Return:
-            node
+        """Retrives the next_node instance.
+
+        Returns: The next_node instance.
         """
         return self.__next_node
 
-      
     @next_node.setter
     def next_node(self, value):
-        """
-        Setter of next_node
+        """Property setter for Node.
+
         Args:
-            value (int): next_node
-        Raises
-            TypeError: if data is not int
-        Returns:
-            None
+            value (None): next node of a Node.
+
+        Raises:
+            TypeError: next_node must be a Node object .
         """
-        if not isinstance(value, Node) and value != None:
+        if value is not None and not isinstance(value, Node):
             raise TypeError("next_node must be a Node object")
-        else:
-            self.__next_node = value
+        self.__next_node = value
+
 
 class SinglyLinkedList:
-     """
-    SinglyLinkedList class
+    """
+    Class that defines properties of SinglyLinkedList.
+
     Attributes:
-        head (Node): a pointer to the singly linked list
+        head: head of the SinglyLinkedList.
     """
     def __init__(self):
-         """
-        Class initializer
+        """Creates new instances of SinglyLinkedList .
+
+        Args:
+            __head : head of the SinglyLinkedList .
         """
         self.__head = None
 
-    def sorted_insert(self, value):
+    def __str__(self):
+        """Represents the class objects as a string.
+
+        Returns: The class object represented as a string.
         """
-        Inserts new Node
+        temp_var = self.__head
+        print_node = []
+        while temp_var:
+            print_node.sort()
+            print_node.append(str(temp_var.data))
+            temp_var = temp_var.next_node
+
+        print_node.sort(key=int)
+        return ("\n".join(print_node))
+
+    def sorted_insert(self, value):
+        """Inserts a new node at a given position.
+
+        Args:
+            value: value.
         """
         if self.__head is None:
-            self.__head = Node(value)
+            new_node = Node(value)
+            new_node.next_node = self.__head
+            self.__head = new_node
         else:
             new_node = Node(value)
-            tmp = self.__head
-            while tmp is not None:
-                if tmp.__next_node is None:
-                    tmp.__next_node = new_node
-                    new_node.__next_node = None
-                if new_node.__data < tmp.__next_node.__data:
-                    new_node.__next_node = tmp.__next_node
-                    tmp.__next_node = new_node
-                tmp = tmp.__next_node
+            new_node.data = value
+            new_node.next_node = self.__head
+            self.__head = new_node
